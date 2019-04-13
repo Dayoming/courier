@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.demo.admin.manage.AdmManageMapper">
+    <sql id="query">
+        SELECT id as id <!-- 관리자 인덱스 -->
+        		, admin_name as adminName <!-- 관리자 이름 -->
+        		, admin_id as adminId <!-- 관리자 아이디 -->
+        		, admin_pw as adminPw <!-- 관리자 패스워드 -->
+        		, admin_depart as adminDepart <!-- 관리자 부서명 -->
+        		, admin_posit as adminPosit <!-- 관리자 직책 -->
+        		, admin_email as adminEmail <!-- 관리자 이메일 -->
+		FROM howcourier.user_info
+    </sql>
+
+    <select id="list" resultType="com.example.demo.admin.manage.AdmManage">
+        <include refid="query"/>
+    </select>
+
+    <insert id="insert" parameterType="com.example.demo.admin.manage.AdmManage">
+		INSERT INTO howcourier.user_info(
+				admin_id
+				, admin_name
+				, admin_pw
+				, admin_depart
+				, admin_posit
+				, admin_email
+				)
+		VALUES(
+				#{adminId}
+				, #{adminName}
+				, #{adminPw}
+				, #{adminDepart}
+				, #{adminPosit}
+				, #{adminEmail}
+				)
+    </insert>
+
+    <delete id="delete" parameterType="string">
+    	DELETE FROM howcourier.user_info
+    	WHERE id = #{id}
+    </delete>
+    
+    <select id="getById" resultType="com.example.demo.admin.manage.AdmManage">
+    	<include refid="query"></include>
+    	WHERE id = #{id}
+    </select>
+    
+    <update id="update" parameterType="com.example.demo.admin.manage.AdmManage">
+    	UPDATE howcourier.user_info
+			SET admin_id= #{adminId}
+				, admin_name = #{adminName}
+				, admin_pw= #{adminPw}
+				, admin_depart= #{adminDepart}
+				, admin_posit= #{adminPosit}
+				, admin_email= #{adminEmail}
+		WHERE id= #{id}
+    </update>
+    
+    <select id="login" parameterType="com.example.demo.admin.manage.AdmManage" resultType="com.example.demo.admin.manage.AdmManage">
+    	<include refid="query"/>
+    	WHERE admin_id=#{adminId} AND admin_pw=#{adminPw}
+    </select>
+
+    <!--<delete id="delete" parameterType="com.example.demo.sample.TrackingHistory">
+        delete from tracking.tracking_history where invoice_no = #{invoiceNo}
+    </delete>-->
+
+</mapper>

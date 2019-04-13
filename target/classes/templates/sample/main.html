@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <title>하우택배</title>
+       <meta charset="UTF-8">
+       <link rel="stylesheet" href="css/common.css"/>
+       <link rel="stylesheet" href="css/fullpage.css"/>
+       <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+   </head>
+   <body>
+    <div id="fullpage">
+       <div class="section wrapper-main">
+           <div class="wrap-logo">
+               <img class="logo" src="img/logo.png" alt="로고"/>
+               <div class="wrap-sub-logo">
+                    <img class="sub-logo" src="img/sub_logo.png" alt="서브로고"/>
+               </div>
+               <form id="frmSearch" name="frmSearch">
+               <div class="wrap-search">
+                   <div class="search-icon">
+                       <img class="search-star" src="img/star.png"/>
+                       <input type="hidden" id="courier" name="courier" value="06"/>
+                       <input type="text" id="invoice" name="invoice" title="운송장번호 입력" class="num-search" placeholder="송장번호를 입력해주세요." />
+                       <input type="button" id="btnSearch" class="search-submit"/>
+                   </div>
+           		</div>
+                </form>
+           </div>
+           <div class="wrap-content">
+             <div class="content-search-result output">
+              </div>
+              <div class="content-notice">
+                   <h2 class="main-hd-content">How courier Service</h2>
+                   <p class="main-content">단순 변심으로 인한 교환 및 반품은 상품 수령 후 7일 이내에만 가능하며 택배비를 고객님께서 부담하셔야 합니다.<br>
+                   무료배송, 교환일 경우 왕복 배송비를 고객님께서 부담하셔야 합니다.<br>
+                   고객센터와 사전 협의 없이 고객님께서 임의로 보낸 교환 및 반품은 반송 처리되니 반드시 발송 전에 고객센터에 연락 부탁드립니다.<br>
+                   사이즈 오차는 재는 사람에 따라 오차가 있을 수 있으며, 이로 인한 교환/반품은 왕복 배송비가 청구됩니다.</p>
+               </div>
+           </div>
+       </div>
+       <div class="section road">
+           <div class="wrap-road">
+              <h2>물류이동경로</h2>
+               <img src="img/delivery_load.png" alt="물류이동경로"/>
+           </div>
+       </div>
+       <div class="section">
+           <div class="wrap-howlogo">
+               <a href="http://howsoft.net"><img src="img/howsoft_logo.svg" alt="하우소프트 로고"/></a>
+           </div>
+           <div class="how-footer">
+               <p>인천광역시 남동구 선수촌공원로 27 보미프라자 5층 하우소프트<br>
+               Tel: 070-7719-7775<br>
+               Copyright@2015 Howsoft All right reserved.</p>
+               <div class="footer-sns">
+                   <a href="https://www.facebook.com/howsoft2020"><img src="img/facebook.png" alt="하우소프트 페이스북 바로가기"/></a>
+                   <img src="img/instagram.png" alt="하우소프트 인스타그램 바로가기"/>
+                   <img src="img/kakaostory.png" alt="하우소프트 카카오스토리 바로가기"/>
+               </div>
+           </div>
+       </div>
+       </div>
+   </body>
+   <script src="js/jquery-3.3.1.min.js"></script>
+   <script src="js/fullpage.js"></script>
+   <script src="js/script.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function() {
+	   
+	   $('body').on('keyup', '.num-search', function(e) {
+		    if(e.keyCode == 13) {
+		        e.preventDefault();
+		        doSearch();
+		    }
+		});
+	   
+	    $('#btnSearch').on('click', function() {
+	      
+	    	$('.content-search-result').empty();
+	    
+	      const frm = $('#frmSearch');
+	      const params = frm.serialize();
+	      let oc = '<table>'; // outputContents
+	      let oversea = true;
+	      
+	      $.ajax({
+	    	  url: '/overlist',
+	    	  data: "oInvoiceNo=" + $('#invoice').val(),
+	    	  error: function() {
+	    		  oc += '<tr class="error-invoice">존재하지 않는 송장번호 입니다. 송장번호를 확인해주세요.</tr>';
+	    	  },
+	    	  success: function(data) {
+	    		  for(let i=0; i < data.length; i++) {
+	    			  console.log(data);
+	    				  oc += '<tr>';
+		  	  	          oc += '<td>' + data[i].oTimeStamp + '</td>';
+		  	  	          oc += '<td>' + data[i].oLocation + '</td>';
+		  	  	          oc += '<td>' + data[i].oItemStatus + '</td>';
+		  	  	          oc += '</tr>';
+		    		}
+	    		  oc += '</table>';
+	  	          $('.output').append(oc);
+	    	  }
+	      });
+	      
+	      if (oversea == false) {
+	    	  $.ajax({
+	  	        url: '/get',
+	  	        data: params,
+	  	        success: function(data) {
+
+	  	        	const reversed = data.trackingDetails.reverse();
+	  	          
+	  	          $('.content-search-result').show();
+	  	          
+	  	          if (data.completeYN == "Y") {
+	  	        	  $.each(reversed, function(idx, obj) {
+	  	  	            console.log('detail >', obj);
+	  	  	            oc += '<tr>';
+
+	  	  	            oc += `<td>${obj.timeString}</td>`;
+	  	  	            oc += `<td>${obj.where}</td>`;
+	  	  	            oc += `<td>${obj.kind}</td>`;
+
+	  	  	            oc += '</tr>';
+	  	  	          });
+	  	          } else {
+	  	        	  oc += '<tr class="error-invoice">존재하지 않는 송장번호 입니다. 송장번호를 확인해주세요.</tr>';
+	  	          }
+	  	          
+	  	          oc += '</table>';
+
+	  	          $('.output').append(oc);
+
+	  	        }
+	  	      });
+	      }
+	    });
+	  });
+   </script>
+</html>

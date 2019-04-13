@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.demo.admin.item.AdmItemMapper">
+    <sql id="query">
+        SELECT item_id as itemId
+        		, invoice_no as invoiceNo
+        		, shop_name as shopName
+        		, item_name as itemName
+        		, receiver_addr as receiverAddr
+        		, post_num as postNum
+        		, receiver_name as receiverName
+        		, contact_us as contactUs
+        		, korea_invoice_no as koreaInvoiceNo
+        		, item_status as itemStatus
+        		, courier_office as courierOffice
+        		, time_stamp as timeStamp
+        		, location as location
+        		, item_time as itemTime
+		FROM howcourier.item_info
+    </sql>
+
+    <select id="list" resultType="com.example.demo.admin.item.AdmItem">
+        <include refid="query"/>
+    </select>
+
+    <insert id="insert" parameterType="com.example.demo.admin.item.AdmItem">
+        INSERT INTO howcourier.item_info(
+        		invoice_no
+        		, shop_name
+        		, item_name
+        		, receiver_addr
+        		, post_num
+        		, receiver_name
+        		, contact_us
+        		, korea_invoice_no
+        		, item_status
+        		, courier_office
+        		, time_stamp
+        		, location
+        		, item_time
+        		)
+		VALUES(
+				#{invoiceNo}
+				, #{shopName}
+				, #{itemName}
+				, #{receiverAddr}
+				, #{postNum}
+				, #{receiverName}
+				, #{contactUs}
+				, #{koreaInvoiceNo}
+				, #{itemStatus}
+				, #{courierOffice}
+				, #{timeStamp}
+				, #{location}
+				, #{itemTime}
+				)
+    </insert>
+
+    <delete id="delete" parameterType="string">
+		DELETE FROM howcourier.item_info
+		WHERE item_id = #{itemId}
+    </delete>
+    
+    <update id="update" parameterType="com.example.demo.admin.item.AdmItem">
+    	UPDATE howcourier.item_info
+			SET invoice_no= #{invoiceNo}
+				, shop_name= #{shopName}
+				, item_name= #{itemName}
+				, receiver_addr= #{receiverAddr}
+				, post_num= #{postNum}
+				, receiver_name= #{receiverName}
+				, contact_us= #{contactUs}
+				, korea_invoice_no = #{koreaInvoiceNo}
+				, item_status = #{itemStatus}
+				, courier_office = #{courierOffice}
+				, time_stamp = #{timeStamp}
+				, location = #{location}
+				, item_time = #{itemTime}
+		WHERE item_id= #{itemId}
+    </update>
+    
+    <select id="getById" resultType="com.example.demo.admin.item.AdmItem">
+    	<include refid="query"></include>
+    	WHERE item_id = #{itemId}
+    </select>
+
+</mapper>

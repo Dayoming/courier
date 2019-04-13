@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.demo.sample.OverseasInfoMapper">
+    <sql id="query">
+        SELECT o_invoice_no as oInvoiceNo
+        		, o_time_stamp as oTimeStamp
+        		, o_location as oLocation
+        		, o_item_status as oItemStatus
+        		, o_item_time as oItemTime
+		FROM howcourier.overseas_info
+    </sql>
+
+    <select id="list" resultType="com.example.demo.sample.OverseasInfo">
+        <include refid="query"/>
+        WHERE o_invoice_no = #{oInvoiceNo} ORDER BY o_time_stamp, o_item_time DESC
+    </select>
+
+    <insert id="insert" parameterType="com.example.demo.admin.item.AdmItem">
+        INSERT INTO howcourier.overseas_info(
+				o_invoice_no
+				, o_time_stamp
+				, o_location
+				, o_item_status
+				, o_item_time
+				)
+		VALUES(
+				#{invoiceNo}
+				, #{timeStamp}
+				, #{location}
+				, #{itemStatus}
+				, #{itemTime}
+				)
+    </insert>
+    
+    <select id="getByItem" resultType="com.example.demo.sample.OverseasInfo">
+    	<include refid="query"/>
+    		WHERE o_invoice_no = #{invoiceNo} AND o_item_status = #{itemStatus}
+    </select>
+
+    <update id="update" parameterType="com.example.demo.admin.item.AdmItem">
+    		UPDATE howcourier.overseas_info
+			SET o_time_stamp = #{timeStamp}
+				, o_location = #{location}
+				, o_item_status = #{itemStatus}
+				, o_item_time = #{itemTime}
+			WHERE o_invoice_no = #{invoiceNo}
+    </update>
+</mapper>

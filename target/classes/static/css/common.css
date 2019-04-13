@@ -1,0 +1,188 @@
+/* CSS 초기화 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    border: 0;
+    
+}
+
+/* Design */
+
+.wrapper-main {
+    width: 100%;
+    height: 100%;;
+    margin: 0 auto;
+    position: fixed;
+    
+}
+
+.wrapper-move {
+    width: 100%;
+    height: 100%;
+    /*    top:100%;*/
+    /*    position: absolute;*/
+    background-color: white;
+}
+
+.wrapper-move2 {
+    width: 100%;
+    height: 100%;
+    /*    position: absolute;*/
+    /*    top: 200%;*/
+    background-color: #042F5B;
+}
+
+.wrap-logo {
+    width: 100%;
+    height: 40%;
+    padding: 30px 0 30px;
+    text-align: center;
+    background-color: rgba(204, 204, 204, 0.8);
+}
+
+.wrap-title {
+    width: 100%;
+    height: 150px;
+}
+
+.wrap-sub-logo {
+    margin-top: 35px;
+    margin-left: 30%
+}
+
+.wrap-search {
+    margin: 0px auto 10px;
+    width: 50%;
+    height: 40px;
+    background-color: white;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.wrap-search .num-search {
+    width: 75%;
+    height: 35px;
+    float: left;
+    margin: 2px 8px;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.wrap-search .search-icon .search-star {
+    padding-top: 8px;
+    padding-left: 10px;
+    float: left;
+}
+
+.wrap-search .search-icon .search-submit-img {
+    padding-top: 4px;
+    padding-right: 15px;
+    float: right;
+}
+
+input.search-submit {
+    background: url("../img/search.png") no-repeat;
+    border: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    float: right;
+    margin-top: 3px;
+}
+
+.wrap-content {
+    width: 50%;
+    margin: 10px auto 0;
+    text-align: left;
+    line-height: 1.5;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.wrap-content .main-content {
+    font-size: 12px;
+}
+
+.content-search-result {
+    width: 100%;
+    height: 120px;
+    overflow: auto;
+}
+
+.content-search-result table {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+}
+
+.content-search-result th {
+    height: 50px;
+}
+
+.content-search-result .error-invoice {
+	text-align: center;
+	font-size: 13px;
+}
+
+.wrap-content .content-notice h2 {
+    margin-top: 20px;
+}
+
+.wrapper-move {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.wrap-road {
+    text-align: center;
+}
+
+.wrap-road img {
+    width: 90%;
+    margin: 50px auto;
+}
+
+.wrap-road h2 {
+    font-size: 40px;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.wrap-howlogo {
+    text-align: center;
+}
+
+.wrap-howlogo img {
+    width: 40%;
+}
+
+.how-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.how-footer p {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.footer-sns img {
+    width: 30px;
+    height: 30px;
+}

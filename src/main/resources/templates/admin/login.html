@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>로그인</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="../../css/admin.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    </head>
+    <body>
+        <div class="wrapper">
+        <form id="frmLogin" name="frmLogin">
+            <div class="wrap-login">
+                <div class="login-logo">
+                    <img src="../../img/logo.png"/>
+                </div>
+                <label for="adminId" class="id-area-label">ID</label>
+                <input type="text" id="adminId" class="id-area" name="adminId"/><br>
+                <label for="adminPw" class="pw-area-label">PW</label>
+                <input type="password" id="adminPw" class="pw-area" name="adminPw"/><br>
+                <input type="button" id="loginSubmit" class="btn-login" value="LOGIN" onclick="login();">
+            </div>
+        </form>
+        </div>
+    </body>
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+    	function login() {
+    		if($('#adminId').val().length < 1) {
+    			alert('아이디를 입력해 주세요.');
+    			$('#adminId').focus();
+    		} else if($('#adminPw').val().length < 1) {
+    			alert('비밀번호를 입력해 주세요.');
+    			$('#adminPw').focus();
+    		} else {
+    			
+    			const loginParam = $('#frmLogin').serialize();
+
+    			$.ajax({
+    				url: '/admin/login/check',
+    				data: loginParam,
+    				success: function(data) {
+    					if(data.resultYN == 'Y') {
+    						location.href = "/admin/item/";
+    					} else {
+    						location.href = "/admin/login";
+    					}
+    				}
+    			});
+    			
+    			
+    		}
+    	}
+    </script>
+</html>

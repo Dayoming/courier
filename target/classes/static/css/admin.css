@@ -1,0 +1,172 @@
+/* CSS 초기화 */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+button {
+    background: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Design */
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+/* 로그인 화면 */
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.wrap-login {
+    padding-top: 10%;
+    height: 40%;
+    text-align: center;
+}
+
+.id-area,  .pw-area {
+    margin: 3px 0;
+    border: 1px solid #d3d3d3;
+    border-radius: 30px;
+    width: 400px;
+    height: 45px;
+}
+
+.id-area {
+    margin-top: 8px;
+}
+
+.pw-area {
+    margin-bottom: 8px;
+}
+
+.id-area-label {
+    padding-right: 8px;
+}
+
+.pw-area-label {
+    padding-right: 2px;
+}
+
+.btn-login {
+    border-radius: 10px;
+    color: #585858;
+    font-size: 30px;
+    padding: 30px 170px 30px 170px;
+    background-color: #cccccc;
+    border-style: none;
+}
+
+.id-area, .pw-area {
+    padding-left: 10px;
+}
+
+/* 관리자 리스트 */
+.list-wrapper {
+    text-align: center;
+}
+
+.list-wrapper h2 {
+    text-align: left;
+    margin: 20px 10px;
+}
+
+.list-title {
+    width: 90%;
+}
+
+.admin-list-wrap {
+    margin: 0 auto 20px;
+    width: 80%;
+    font-size: 12px;
+}
+
+.admin-list-wrap tr {
+    line-height: 2.5;
+}
+
+.btn-add-admin, .btn-add-item {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.pagination-wrap {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page-link {
+    color: #989898;
+}
+
+.btn {
+    font-size: 12px;
+}
+
+.list-nav {
+    font-size: 13px;
+}
+
+/* 관리자 추가 팝업 */
+.add-admin-wrap {
+    width: 500px;
+    height: 300px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.add-item-wrap {
+    width: 400px;
+    height: 350px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.add-admin-area {
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+}
+
+.add-item-area {
+    width: 400px;
+    height: 200px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+}
+
+.add-item-area table {
+    width: 400px;
+}
+
+.add-item-area table input {
+    width: 180px;
+}
+
+.add-area-table {
+    margin: auto;
+    text-align: left;
+    margin-top: 30px;
+}
+

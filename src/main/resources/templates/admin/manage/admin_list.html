@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>관리자목록</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="../../css/bootstrap.css"/>
+        <link rel="stylesheet" href="../../css/admin.css"/>
+    </head>
+    <body>
+        <div class="list-wrapper">
+           <div class="list-nav">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                    <a class="nav-link active" href="/admin/manage/">관리자</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="/admin/item/">상품관리</a>
+                    </li>
+                    <li class="nav-item nav-login">
+                    <a class="nav-link" href="/admin/logout">로그아웃</a>
+                    </li>
+                </ul>
+           </div>
+            <div class="list-title">
+                <button type="button" class="btn btn-secondary btn-add-admin" data-toggle="modal" data-target="#adminAddModal">추가</button>
+            </div>
+            
+                        
+             <div class="modal fade" id="adminAddModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addAdminModalLabel">관리자 추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="frmValidate" id="frmAddAdmin" name="frmAddAdmin">
+                      <div class="form-group">
+                        <label for="addName" class="col-form-label">이름</label>
+                        <input type="text" class="form-control" name="adminName" id="addName">
+                      </div>
+                      <div class="form-group">
+                        <label for="addId" class="col-form-label">아이디</label>
+                        <input type="text" class="form-control" name="adminId" id="addId"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="addPw" class="col-form-label">비밀번호</label>
+                        <input type="password" class="form-control" name="adminPw" id="addPw"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="addDepart" class="col-form-label">부서명</label>
+                        <input type="text" class="form-control" name="adminDepart" id="addDepart"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="addPosit" class="col-form-label">직책</label>
+                        <input type="text" class="form-control" name="adminPosit" id="addPosit"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="addEmail" class="col-form-label">이메일</label>
+                        <input type="text" name="adminEmail" class="form-control" id="addEmail"/>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" id="btnAddAdmin">추가</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 관리자 수정 폼 -->
+            <div class="modal fade" id="adminModifyModal" tabindex="-1" role="dialog" aria-labelledby="ModifyModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="ModifyModalLabel">관리자 수정</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="frmValidate" id="frmModifyAdmin" name="frmModifyAdmin">
+                      <div class="form-group">
+                        <label for="modifyName" class="col-form-label">이름</label>
+                        <input type="text" class="form-control" name="adminName" id="modifyName">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyId" class="col-form-label">아이디</label>
+                        <input type="text" class="form-control" name="adminId" id="modifyId"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyPw" class="col-form-label">비밀번호</label>
+                        <input type="password" class="form-control" name="adminPw" id="modifyPw"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyDepart" class="col-form-label">부서명</label>
+                        <input type="text" class="form-control" name="adminDepart" id="modifyDepart"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyPosit" class="col-form-label">직책</label>
+                        <input type="text" class="form-control" name="adminPosit" id="modifyPosit"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyEmail" class="col-form-label">이메일</label>
+                        <input type="text" name="adminEmail" class="form-control" id="modifyEmail"/>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" id="btnModifyAdmin">수정</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+            
+           <div class="table-responsive">
+            <table class="table table-sm admin-list-wrap admin-list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">이름</th>
+                        <th scope="col">아이디</th>
+                        <th scope="col">부서명</th>
+                        <th scope="col">직책</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col" style="width:17%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+            <div class="pagination-wrap">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center pagination-sm">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo;</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">&raquo;</a>
+                    </li>
+                  </ul>
+                </nav>
+            </div>
+        </div>
+        <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.js"></script>
+        <script type="text/javascript" src="../../js/script.js"></script>
+        <script type="text/javascript" src="../../js/underscore.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+        	
+        	$.ajax({
+    			url: '/admin/manage/list',
+    			success: function(data) {
+    				$('.admin-list-table > tbody').empty();
+    				let adminList = '';
+    				
+    				for(let i = 0; i < data.length; i++) {
+    					adminList += '<tr class="' + data[i].id + '">' +
+                        '    <td>' + data[i].adminName + '</td>' +
+                        '    <td>' + data[i].adminId + '</td>' +
+                        '    <td>' + data[i].adminDepart + '</td>' +
+                        '    <td>' + data[i].adminPosit + '</td>' +
+                        '    <td>' + data[i].adminEmail + '</td>' +
+                        '<td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#adminModifyModal" onclick="adminModify(this);">수정</button><input type="button" class="btn btn-danger" value="삭제" onclick="adminDelete(this);">' +
+                    	'</td>' +
+                        '</tr>';
+                        
+                   $('.admin-list-table > tbody').append(adminList);
+                   
+                   		adminList = '';
+						};
+    					
+    				}
+                    
+    			});
+		});
+               
+        $('#btnAddAdmin').on('click', function(e) {
+        	
+        	let valid = false;
+		    $('#frmAddAdmin').find('input').each(function() {
+		        if (_.isEmpty($(this).val())) {
+		            $(this).focus();
+		            valid = true;
+		            return false;
+		        }
+		    });
+        	
+        	if (valid) {
+		        alert('모든 값을 입력하세요.');
+		        return false;
+		    }
+		    
+		    var email = $('#frmAddAdmin input[name=adminEmail]').val();
+		    var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		    valid = emailPattern.test(email);
+		    if (!valid) {
+		        alert('이메일 입력 형식을 확인하세요.');
+		        $('frmAddAdmin input[name=adminEmail]').focus().select();
+		        return false;
+		    }
+		    
+ 			let addAdminData = $('#frmAddAdmin').serialize();
+		    
+		    $.ajax({
+		    	url: '/admin/manage/add',
+		    	type: 'GET',
+		    	data: addAdminData,
+		    	success: function(data) {
+		    	}
+		    })
+		    
+		    $('#frmAddAdmin')[0].reset();
+		    location.reload();
+		    
+        });
+        
+        function adminDelete(admin) {
+			const deleteAdminParams = "id=" + $(admin).parent().parent().attr('class');
+			
+			$.ajax({
+				url: '/admin/manage/delete',
+				data: deleteAdminParams,
+				success: function(data) {
+				}
+			});
+			
+			location.reload();
+		}
+        
+        function adminModify(admin) {
+        	const modifyAdminParams = "id=" + $(admin).parent().parent().attr('class');
+        	
+        	$.ajax({
+        		url: '/admin/manage/searchId',
+        		data: modifyAdminParams,
+        		success: function(data) {
+        			console.log(data);
+        			$('#modifyName').val(data.adminName);
+        			$('#modifyId').val(data.adminId);
+        			$('#modifyPw').val(data.adminPw);
+        			$('#modifyDepart').val(data.adminDepart);
+        			$('#modifyPosit').val(data.adminPosit);
+        			$('#modifyEmail').val(data.adminEmail);
+        			
+        			$('#btnModifyAdmin').on('click', function(e) {
+        				
+        				let valid = false;
+        			    $('#frmModifyAdmin').find('input').each(function() {
+        			        if (_.isEmpty($(this).val())) {
+        			            $(this).focus();
+        			            valid = true;
+        			            return false;
+        			        }
+        			    });
+        	        	
+        	        	if (valid) {
+        			        alert('모든 값을 입력하세요.');
+        			        return false;
+        			    }
+        			    
+        			    var email = $('#frmModifyAdmin input[name=adminEmail]').val();
+        			    var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        			    valid = emailPattern.test(email);
+        			    if (!valid) {
+        			        alert('이메일 입력 형식을 확인하세요.');
+        			        $('frmModifyAdmin input[name=adminEmail]').focus().select();
+        			        return false;
+        			    }
+        				
+        				const updateAdminParams = $('#frmModifyAdmin').serialize();
+        				
+        				$.ajax({
+        					url: '/admin/manage/update',
+        					data: modifyAdminParams + '&' + updateAdminParams,
+        					success: function(data) {
+        						
+        					}
+        				});
+        				
+        				alert('수정되었습니다.');
+						$('#adminModifyModal').hide();
+						location.reload();
+        				
+        			});
+        			
+        		}
+        	});
+        }
+        
+        </script>
+    </body>
+</html>

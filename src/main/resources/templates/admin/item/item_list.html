@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>상품목록</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="../../css/bootstrap.css"/>
+        <link rel="stylesheet" href="../../css/admin.css"/>
+    </head>
+    <body>
+        <div class="list-wrapper">
+           <div class="list-nav">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/manage/">관리자</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/item/">상품관리</a>
+                    </li>
+                    <li class="nav-item nav-login">
+                        <a class="nav-link" href="/admin/logout/">로그아웃</a>
+                    </li>
+                </ul>
+           </div>
+            <div class="list-title">
+                <button id="btnItemAddModal" type="button" class="btn btn-secondary btn-add-item" data-toggle="modal" data-target="#itemAddModal">추가</button>
+            </div>
+            
+            <div class="modal fade" id="itemAddModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">상품 추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="frmAddItem" name="frmAddItem">
+                      <div class="form-group">
+                        <label for="addShopName" class="col-form-label">쇼핑몰이름</label>
+                        <input type="text" class="form-control" name="shopName">
+                      </div>
+                      <div class="form-group">
+                        <label for="itemInvoice" class="col-form-label">운송장번호</label>
+                        <input type="text" class="form-control" id="itemInvoice" name="invoiceNo">
+                      </div>
+                      <div class="form-group">
+                        <label for="courierOffice" class="col-form-label">국내배송사명</label>
+                        <select class="form-control from-control-sm" id="courierOffice" name="courierOffice">
+                      		<option value="06">로젠택배</option>
+                      		<option value="01">우체국택배</option>
+                      		<option value="04">CJ대한통운</option>
+                      	</select>
+                      </div>
+                      <div class="form-group">
+                        <label for="koreaInvoice" class="col-form-label">국내배송사 운송장번호</label>
+                        <input type="text" class="form-control" id="koreaInvoice" name="koreaInvoiceNo">
+                      </div>
+                      <div class="form-group">
+                        <label for="addItemName" class="col-form-label">상품명</label>
+                        <input type="text" class="form-control" id="addItemName" name="itemName">
+                      </div>
+                      <div class="form-group">
+                        <label for="addReceiverAddr" class="col-form-label">주소</label>
+                        <input type="text" class="form-control" id="addReceiverAddr" name="receiverAddr">
+                      </div>
+                      <div class="form-group">
+                        <label for="addPostNum" class="col-form-label">우편번호</label>
+                        <input type="text" class="form-control" id="addPostNum" name="postNum">
+                      </div>
+                      <div class="form-group">
+                        <label for="addLocation" class="col-form-label">현재위치</label>
+                        <input type="text" class="form-control" id="addLocation" name="location">
+                      </div>
+                      <div class="form-group">
+                        <label for="addReceiverName" class="col-form-label">받는 분</label>
+                        <input type="text" class="form-control" id="addReceiverName" name="receiverName">
+                      </div>
+                      <div class="form-group">
+                        <label for="addTimeStamp" class="col-form-label">시간</label>
+                        <input type="date" class="form-control" id="addTimeStamp" name="timeStamp"><input type="time" class="form-control" id="addItemTime" name="itemTime"/>
+                      </div>
+                      <textarea class="form-control" id="message-text" name="contactUs" placeholder="전하실 말씀"></textarea>
+                      <div class="form-group">
+                        <label for="addItemStatus" class="col-form-label">배송상태</label>
+                        <select class="form-control from-control-sm" id="addItemStatus" name="itemStatus">
+                      		<option>출고지 상품 준비</option>
+                      		<option>해외배송 시작</option>
+                      		<option>해외배송지 도착</option>
+                      		<option>물품검수</option>
+                      		<option>해상선적</option>
+                      		<option>해상운송중</option>
+                      		<option>항공선적</option>
+                      		<option>항공운송중</option>
+                      		<option>국내도착</option>
+                      		<option>세관통관</option>
+                      		<option>국내배송</option>
+                      		<option>배송완료</option>
+                      	</select>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" id="btnAddItem">추가</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 아이템 수정 폼 -->
+            <div class="modal fade" id="itemModifyModal" tabindex="-1" role="dialog" aria-labelledby="addModifyModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modifyItemModalLabel">상품 수정</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="frmModifyItem" name="frmModifyItem">
+                      <div class="form-group">
+                        <label for="modifyShopName" class="col-form-label">쇼핑몰이름</label>
+                        <input type="text" class="form-control" id="modifyShopName" name="shopName">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyItemInvoice" class="col-form-label">운송장번호</label>
+                        <input type="text" class="form-control" id="modifyItemInvoice" name="invoiceNo">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyCourierOffice" class="col-form-label">국내배송사명</label>
+                        <select class="form-control from-control-sm" id="modifyCourierOffice" name="courierOffice">
+                      		<option value="06">로젠택배</option>
+                      		<option value="01">우체국택배</option>
+                      		<option value="04">CJ대한통운</option>
+                      	</select>
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyKoreaInvoice" class="col-form-label">국내배송사 운송장번호</label>
+                        <input type="text" class="form-control" id="modifyKoreaInvoice" name="koreaInvoiceNo">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyItemName" class="col-form-label">상품명</label>
+                        <input type="text" class="form-control" id="modifyItemName" name="itemName">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyReceiverAddr" class="col-form-label">주소</label>
+                        <input type="text" class="form-control" id="modifyReceiverAddr" name="receiverAddr">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyPostNum" class="col-form-label">우편번호</label>
+                        <input type="text" class="form-control" id="modifyPostNum" name="postNum">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyLocation" class="col-form-label">현재 위치</label>
+                        <input type="text" class="form-control" id="modifyLocation" name="location">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyReceiverName" class="col-form-label">받는 분</label>
+                        <input type="text" class="form-control" id="modifyReceiverName" name="receiverName">
+                      </div>
+                      <div class="form-group">
+                        <label for="modifyTimeStamp" class="col-form-label">시간</label>
+                        <input type="date" class="form-control" id="modifyTimeStamp" name="timeStamp"><input type="time" class="form-control" id="modifyItemTime" name="itemTime"/>
+                      </div>
+                      <textarea class="form-control" id="modifyContactUs" name="contactUs" placeholder="전하실 말씀"></textarea>
+                      <div class="form-group">
+                        <label for="modifyItemStatus" class="col-form-label">배송상태</label>
+                        <select class="form-control from-control-sm" id="modifyItemStatus" name="itemStatus">
+                      		<option>출고지 상품 준비</option>
+                      		<option>해외배송 시작</option>
+                      		<option>해외배송지 도착</option>
+                      		<option>물품검수</option>
+                      		<option>해상선적</option>
+                      		<option>해상운송중</option>
+                      		<option>항공선적</option>
+                      		<option>항공운송중</option>
+                      		<option>국내도착</option>
+                      		<option>세관통관</option>
+                      		<option>국내배송</option>
+                      	</select>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" id="btnModifyItem">수정</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+            
+           <div class="table-responsive">
+            <table class="table table-sm admin-list-wrap item-list-table">
+            	
+                <thead>
+                    <tr>
+                        <th scope="col">쇼핑몰이름</th>
+                        <th scope="col">운송장번호</th>
+                        <th scope="col" style="font-size: 11px; line-height: 1.5;">국내배송사<br>운송장번호</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">주소</th>
+                        <th scope="col">우편번호</th>
+                        <th scope="col">현재위치</th>
+                        <th scope="col">받는 분</th>
+                        <th scope="col">최근수정일</th>
+                        <th scope="col">전하실 말씀</th>
+                        <th scope="col">배송상태</th>
+                        <th scope="col" style="width:17%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+            <div class="pagination-wrap">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center pagination-sm">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo;</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">&raquo;</a>
+                    </li>
+                  </ul>
+                </nav>
+            </div>
+        </div>
+        <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.js"></script>
+        <script type="text/javascript" src="../../js/script.js"></script>
+    	<script type="text/javascript" src="../../js/underscore.js"></script>
+    	<script type="text/javascript">
+    	
+    	$(document).ready(function() {
+    		
+    		$.ajax({
+    			url: '/admin/item/list',
+    			success: function(data) {
+    				$('.item-list-table > tbody').empty();
+    				let itemList = '';
+    				
+    				for(let i = 0; i < data.length; i++) {
+    					itemList += '<tr class="' + data[i].itemId + '">' +
+                        '    <td>' + data[i].shopName + '</td>' +
+                        '    <td>' + data[i].invoiceNo + '</td>' +
+                        '    <td>' + data[i].koreaInvoiceNo + '</td>' +
+                        '    <td>' + data[i].itemName + '</td>' +
+                        '    <td>' + data[i].receiverAddr + '</td>' +
+                        '    <td>' + data[i].postNum + '</td>' +
+                        '    <td>' + data[i].location + '</td>' +
+                        '    <td>' + data[i].receiverName + '</td>' +
+                        '    <td>' + data[i].timeStamp + ' ' + data[i].itemTime + '</td>' +
+                        '    <td>' + data[i].contactUs + '</td>' +
+                        '    <td>' + data[i].itemStatus + '</td>' +
+                        '<td><input type="button" class="btn btn-secondary" data-toggle="modal" data-target="#itemModifyModal" onclick="itemModify(this);" value="수정">' +
+                    	'</td>' +
+                        '</tr>';
+                        
+                   $('.item-list-table > tbody').append(itemList);
+                   
+                   		itemList = '';
+			};
+    					
+    				}
+                    
+    			});
+    		
+    		});
+    	
+    		function itemDelete(item) {
+    			const deleteItemParams = "itemId=" + $(item).parent().parent().attr('class');
+				
+				$.ajax({
+					url: '/admin/item/delete',
+					data: deleteItemParams,
+					success: function(data) {
+					}
+				});
+				
+				location.reload();
+    		}
+    	
+	    /* 	$(".btnItemDelete").on("click", function(e) {
+				itemDelete();
+			}); */
+    		
+    		$("#btnItemAddModal").on("click", function(e) {
+    			let randomItemInvoice = '';
+    			randomItemInvoice = randomString();
+    			$("#itemInvoice").val(randomItemInvoice);
+    			$("#itemInvoice").attr("readonly", true);
+    		});
+    		
+			$("#btnAddItem").on("click", function(e) {
+				
+				let valid = false;
+			    $('#frmAddItem').find('input').each(function() {
+			        if (_.isEmpty($(this).val())) {
+			            $(this).focus();
+			            valid = true;
+			            return false;
+			        }
+			    });
+
+			    if (valid) {
+			        alert('모든 값을 입력하세요.');
+			        return false;
+			    }
+			    
+			    const addItemFrm = $('#frmAddItem');
+				const addItemParams = addItemFrm.serialize();
+				
+				$.ajax({
+			    	url: '/admin/item/add',
+			    	data: addItemParams,
+			    	success: function(data) {
+			    	}
+			    });
+				
+				$('#frmAddItem')[0].reset();
+	    		$('#itemInvoice').val(randomString());
+
+			});
+    	
+    	function randomString() {
+    		const possible = "0123456789";
+    		let randomString = '';
+    		for (let i = 0; i < 11; i++) {
+    			randomString += possible.charAt(Math.floor(Math.random() * possible.length));
+    		}
+    		
+    		return randomString;
+    		
+    	}
+    	
+    	function itemModify(item) {
+        	const modifyItemParams = "itemId=" + $(item).parent().parent().attr('class');
+        	
+        	$.ajax({
+        		url: '/admin/item/searchId',
+        		data: modifyItemParams,
+        		success: function(data) {
+        			console.log(data);
+        			$('#modifyShopName').val(data.shopName);
+        			$('#modifyItemInvoice').val(data.invoiceNo);
+        			$('#modifyKoreaInvoice').val(data.koreaInvoiceNo);
+        			$('#modifyCourierOffice').val(data.courierOffice);
+        			$('#modifyItemName').val(data.itemName);
+        			$('#modifyReceiverAddr').val(data.receiverAddr);
+        			$('#modifyPostNum').val(data.postNum);
+        			$('#modifyLocation').val(data.location);
+        			$('#modifyReceiverName').val(data.receiverName);
+        			$('#modifyContactUs').val(data.contactUs);
+        			$('#modifyItemStatus').val(data.itemStatus);
+        			$('#modifyTimeStamp').val(data.timeStamp);
+        			$('#modifyItemTime').val(data.itemTime);
+        			
+        			$('#btnModifyItem').on('click', function(e) {
+        				
+        				let valid = false;
+        			    $('#frmModifyItem').find('input').each(function() {
+        			        if (_.isEmpty($(this).val())) {
+        			            $(this).focus();
+        			            valid = true;
+        			            return false;
+        			        }
+        			    });
+        	        	
+        	        	if (valid) {
+        			        alert('모든 값을 입력하세요.');
+        			        return false;
+        			    }
+        			    
+        				const updateModifyParams = $('#frmModifyItem').serialize();
+        				console.log("updateModifyParams : " + updateModifyParams);
+        				console.log("modifyItemParams : " + modifyItemParams);
+        				$.ajax({
+        					url: '/admin/item/update',
+        					data: modifyItemParams + '&' + updateModifyParams,
+        					success: function(data) {
+        					}
+        				});
+        				
+        				alert('수정되었습니다.');
+						$('#itemModifyModal').hide();
+						location.reload();
+        				
+        			});
+        			
+        		}
+        	});
+        }
+    	
+    	</script>
+    </body>
+</html>
